@@ -34,9 +34,6 @@
 @end
 
 @implementation MMViewController
-@synthesize selectedGridCells = selectedGridCells_;
-@synthesize tableData = tableData_;
-@synthesize cellDataBuffer = cellDataBuffer_;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -60,7 +57,7 @@
     // Create the spreadsheet in code.
     MMSpreadsheetView *spreadSheetView = [[MMSpreadsheetView alloc] initWithNumberOfHeaderRows:1 numberOfHeaderColumns:1 frame:self.view.bounds];
 
-    // Register your cell classes
+    // Register your cell classes.
     [spreadSheetView registerCellClass:[MMGridCell class] forCellWithReuseIdentifier:@"GridCell"];
     [spreadSheetView registerCellClass:[MMTopRowCell class] forCellWithReuseIdentifier:@"TopRowCell"];
     [spreadSheetView registerCellClass:[MMLeftColumnCell class] forCellWithReuseIdentifier:@"LeftColumnCell"];

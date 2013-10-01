@@ -26,19 +26,19 @@ pod 'MMSpreadsheetView', '~> 0.0.1'
 The designated initializer for `MMSpreadsheetView` requires passing in the number of header rows and columns as well as the initial bounds rect. Register the cell classes you will be using and set the delegate and dataSource. Finally, add the view as a subview.
 
 ```Objective-C
-// Create the spreadsheet in code
+// Create the spreadsheet in code.
 MMSpreadsheetView *spreadSheetView = [[MMSpreadsheetView alloc] initWithNumberOfHeaderRows:1 numberOfHeaderColumns:1 frame:self.view.bounds];
 
-// Register your cell classes
+// Register your cell classes.
 [spreadSheetView registerCellClass:[MMGridCell class] forCellWithReuseIdentifier:@"GridCell"];
 [spreadSheetView registerCellClass:[MMTopRowCell class] forCellWithReuseIdentifier:@"TopRowCell"];
 [spreadSheetView registerCellClass:[MMLeftColumnCell class] forCellWithReuseIdentifier:@"LeftColumnCell"];
 
-// Set the delegate & datasource spreadsheet view
+// Set the delegate & datasource spreadsheet view.
 spreadSheetView.delegate = self;
 spreadSheetView.dataSource = self;
 
-// Add the spreadsheet view as a subview
+// Add the spreadsheet view as a subview.
 [self.view addSubview:spreadSheetView];
 self.spreadSheetView = spreadSheetView;
 ```
