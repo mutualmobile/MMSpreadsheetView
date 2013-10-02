@@ -1,8 +1,8 @@
 #Mutual Mobile Spreadsheet View
-`MMSpreadsheetView` is a configurable spreadsheet-like view. Depending on the initial header row or column configuration, up to four collection views will be coordinated to provide the user interface. While it was originally designed for iPad, it can be used on smaller screens.
+`MMSpreadsheetView` is a configurable spreadsheet-like view. Depending on the initial header row or column configuration, up to four collection views will be coordinated to provide the user interface. While it was originally designed for a full-sized iPad, it also works on smaller screens.
 
 <p align="center" >
-<img src="http://mutualmobile.github.io/MMSpreadsheetView/ExampleImages/PocketExample.png"/>
+<img src="http://mutualmobile.github.io/MMSpreadsheetView/ExampleImages/PocketExample.png" width="500" height="282"/>
 </p>
 
 <p align="center" >
