@@ -12,6 +12,8 @@
 		1767376017C6A85100DDFE2D /* MMSpreadsheetView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1767375F17C6A85100DDFE2D /* MMSpreadsheetView.m */; };
 		1767376317C7E7A100DDFE2D /* MMGridLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 1767376217C7E7A100DDFE2D /* MMGridLayout.m */; };
 		17803AD417F1ED8500553B58 /* NSIndexPath+MMSpreadsheetView.m in Sources */ = {isa = PBXBuildFile; fileRef = 17803AD317F1ED8500553B58 /* NSIndexPath+MMSpreadsheetView.m */; };
+		17A2322117FF506E00AE6A6A /* mm_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 17A2321F17FF506E00AE6A6A /* mm_logo.png */; };
+		17A2322217FF506E00AE6A6A /* mm_logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 17A2322017FF506E00AE6A6A /* mm_logo@2x.png */; };
 		17EEF65017BAA6D6003233B5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 17EEF64F17BAA6D6003233B5 /* UIKit.framework */; };
 		17EEF65217BAA6D6003233B5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 17EEF65117BAA6D6003233B5 /* Foundation.framework */; };
 		17EEF65417BAA6D6003233B5 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 17EEF65317BAA6D6003233B5 /* CoreGraphics.framework */; };
@@ -36,6 +38,8 @@
 		1767376217C7E7A100DDFE2D /* MMGridLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MMGridLayout.m; path = ../../MMSpreadsheetView/MMGridLayout.m; sourceTree = "<group>"; };
 		17803AD217F1ED8500553B58 /* NSIndexPath+MMSpreadsheetView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSIndexPath+MMSpreadsheetView.h"; path = "../../MMSpreadsheetView/NSIndexPath+MMSpreadsheetView.h"; sourceTree = "<group>"; };
 		17803AD317F1ED8500553B58 /* NSIndexPath+MMSpreadsheetView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSIndexPath+MMSpreadsheetView.m"; path = "../../MMSpreadsheetView/NSIndexPath+MMSpreadsheetView.m"; sourceTree = "<group>"; };
+		17A2321F17FF506E00AE6A6A /* mm_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mm_logo.png; sourceTree = "<group>"; };
+		17A2322017FF506E00AE6A6A /* mm_logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mm_logo@2x.png"; sourceTree = "<group>"; };
 		17EEF64C17BAA6D6003233B5 /* MMSpreadsheetView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MMSpreadsheetView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		17EEF64F17BAA6D6003233B5 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		17EEF65117BAA6D6003233B5 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -131,6 +135,8 @@
 		17EEF65617BAA6D6003233B5 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				17A2321F17FF506E00AE6A6A /* mm_logo.png */,
+				17A2322017FF506E00AE6A6A /* mm_logo@2x.png */,
 				17EEF65717BAA6D6003233B5 /* MMSpreadsheetView-Info.plist */,
 				17EEF65817BAA6D6003233B5 /* InfoPlist.strings */,
 				17EEF65B17BAA6D6003233B5 /* main.m */,
@@ -196,6 +202,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				17EEF65A17BAA6D6003233B5 /* InfoPlist.strings in Resources */,
+				17A2322217FF506E00AE6A6A /* mm_logo@2x.png in Resources */,
+				17A2322117FF506E00AE6A6A /* mm_logo.png in Resources */,
 				17EEF66217BAA6D6003233B5 /* Default.png in Resources */,
 				17EEF66417BAA6D6003233B5 /* Default@2x.png in Resources */,
 				17EEF66617BAA6D6003233B5 /* Default-568h@2x.png in Resources */,

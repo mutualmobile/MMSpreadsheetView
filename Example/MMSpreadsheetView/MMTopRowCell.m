@@ -25,11 +25,6 @@
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        UIView *view = [[UIView alloc] initWithFrame:self.contentView.bounds];
-        view.backgroundColor = [UIColor colorWithRed:1.0f green:0.0f blue:0.9f alpha:0.3f];
-        view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-        [self.contentView addSubview:view];
-
         CGRect rect = CGRectMake(0.0f, 0.0f, frame.size.width, frame.size.height);
         _textLabel = [[UILabel alloc] initWithFrame:rect];
         _textLabel.backgroundColor = [UIColor clearColor];

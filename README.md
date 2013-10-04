@@ -1,9 +1,5 @@
 #Mutual Mobile Spreadsheet View
-`MMSpreadsheetView` is a configurable spreadsheet-like view. Depending on the initial header row or column configuration, up to four collection views will be coordinated to provide the user interface. While it was originally designed for a full-sized iPad, it also works on smaller screens.
-
-<p align="center" >
-<img src="http://mutualmobile.github.io/MMSpreadsheetView/ExampleImages/PocketExample.png" width="500" height="282"/>
-</p>
+`MMSpreadsheetView` is a configurable spreadsheet-like view. Depending on the initial header row or column configuration, up to four collection views will be coordinated to provide the user interface. Although originally designed for use on iPad in full-screen, it scales down well for use in smaller views.
 
 <p align="center" >
 <img src="http://mutualmobile.github.io/MMSpreadsheetView/ExampleImages/Example.png"/>
@@ -53,15 +49,15 @@ self.spreadSheetView = spreadSheetView;
 
 <ul>
 <li><strong>Performance</strong>: As the number of cells shown increases, scrolling performance declines. A large grid (1000x1000) takes a long time to initialize, but if the cell sizes are large enough (150x150) or greater, scrolling performance is not affected. However, a small grid (50x50) of (20x20) cells basically doesn't scroll.</li>
-<li><strong>NSIndexPath convenience category</strong>: We've added a convenience category to reduce confusion. indexPath.mmSpreadsheetRow represents a row in the spreadsheet view and indexPath.mmSpreadsheetColumn represents a column.</li>
-<li><strong>CollectionView pass-through methods</strong>: The following methods provide support for copy/paste actions on cells. All three should be implemented if any are.</li>
+<li><strong>NSIndexPath convenience category</strong>: The library includes a convenience category for NSIndexPath to reduce confusion. The additions of indexPath.mmSpreadsheetRow and indexPath.mmSpreadsheetColumn represent their respective elements.</li>
+<li><strong>CollectionView pass-through methods</strong>: The following methods provide support for copy/paste actions on cells. All three should be implemented if any are.
 <ol>
 <li>spreadsheetView:shouldShowMenuForItemAtIndexPath:</li>
 <li>spreadsheetView:canPerformAction:forItemAtIndexPath:withSender:</li>
 <li>spreadsheetView:performAction:forItemAtIndexPath:withSender:<br /><br /></li>
-</ol>  
+</ol></li>
 
-<li><strong>Unintended gesture handling</strong>: Stretching the view to a bounce in one direction then quickly trying to drag in another direction could lock the grid in a bounce so we disable touches to the non-controlling views until the bounce settles. We also simulate exclusive touch so if one grid is being dragged, the others do not respond to touches until the drag completes.</li>
+<li><strong>Unintended gesture handling</strong>: MMSpreadsheetView hooks into the collection view pan gesture recognizers to implement "exclusive touch," which disables tap registration on other sections of the grid until the first touch ends. Also, touches are disabled when the view is in a bounce to prevent locking the view in an awkward state.</li>
 </ul>
 
 ---

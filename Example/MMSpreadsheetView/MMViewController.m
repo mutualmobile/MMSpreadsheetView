@@ -118,20 +118,30 @@
         // Upper left.
         cell = [spreadsheetView dequeueReusableCellWithReuseIdentifier:@"GridCell" forIndexPath:indexPath];
         MMGridCell *gc = (MMGridCell *)cell;
-        gc.textLabel.text = @"YOUR LOGO HERE!\n\nBTW, this is cell 0,0";
+        UIImageView *logo = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"mm_logo"]];
+        [gc.contentView addSubview:logo];
+        logo.center = gc.contentView.center;
         gc.textLabel.numberOfLines = 0;
+        cell.backgroundColor = [UIColor colorWithWhite:0.9f alpha:1.0f];
     }
     else if (indexPath.mmSpreadsheetRow == 0 && indexPath.mmSpreadsheetColumn > 0) {
         // Upper right.
         cell = [spreadsheetView dequeueReusableCellWithReuseIdentifier:@"TopRowCell" forIndexPath:indexPath];
         MMTopRowCell *tr = (MMTopRowCell *)cell;
         tr.textLabel.text = [NSString stringWithFormat:@"TR: %i", indexPath.mmSpreadsheetColumn];
+        cell.backgroundColor = [UIColor whiteColor];
     }
     else if (indexPath.mmSpreadsheetRow > 0 && indexPath.mmSpreadsheetColumn == 0) {
         // Lower left.
         cell = [spreadsheetView dequeueReusableCellWithReuseIdentifier:@"LeftColumnCell" forIndexPath:indexPath];
         MMLeftColumnCell *lc = (MMLeftColumnCell *)cell;
         lc.textLabel.text = [NSString stringWithFormat:@"Left Column: %i", indexPath.mmSpreadsheetRow];
+        BOOL isDarker = indexPath.mmSpreadsheetRow % 2 == 0;
+        if (isDarker) {
+            cell.backgroundColor = [UIColor colorWithRed:222.0f / 255.0f green:243.0f / 255.0f blue:250.0f / 255.0f alpha:1.0f];
+        } else {
+            cell.backgroundColor = [UIColor colorWithRed:233.0f / 255.0f green:247.0f / 255.0f blue:252.0f / 255.0f alpha:1.0f];
+        }
     }
     else {
         // Lower right.
@@ -140,14 +150,14 @@
         NSArray *colData = [self.tableData objectAtIndex:indexPath.mmSpreadsheetRow];
         NSString *rowData = [colData objectAtIndex:indexPath.mmSpreadsheetColumn];
         gc.textLabel.text = rowData;
+        BOOL isDarker = indexPath.mmSpreadsheetRow % 2 == 0;
+        if (isDarker) {
+            cell.backgroundColor = [UIColor colorWithRed:242.0f / 255.0f green:242.0f / 255.0f blue:242.0f / 255.0f alpha:1.0f];
+        } else {
+            cell.backgroundColor = [UIColor colorWithRed:250.0f / 255.0f green:250.0f / 255.0f blue:250.0f / 255.0f alpha:1.0f];
+        }
     }
 
-    BOOL isHighlighted = indexPath.mmSpreadsheetRow % 2 == 0;
-    if (isHighlighted) {
-        cell.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1.0];
-    } else {
-        cell.backgroundColor = [UIColor whiteColor];
-    }
     return cell;
 }
 
