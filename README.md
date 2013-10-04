@@ -56,7 +56,6 @@ self.spreadSheetView = spreadSheetView;
 <li>spreadsheetView:canPerformAction:forItemAtIndexPath:withSender:</li>
 <li>spreadsheetView:performAction:forItemAtIndexPath:withSender:<br /><br /></li>
 </ol></li>
-
 <li><strong>Unintended gesture handling</strong>: MMSpreadsheetView hooks into the collection view pan gesture recognizers to implement "exclusive touch," which disables tap registration on other sections of the grid until the first touch ends. Also, touches are disabled when the view is in a bounce to prevent locking the view in an awkward state.</li>
 </ul>
 
