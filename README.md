@@ -13,11 +13,12 @@ Official appledoc documentation can be found at [CocoaDocs](http://cocoadocs.org
 ---
 
 ##Installing MMSpreadsheetView
-<img src="http://cocoapod-badges.herokuapp.com/v/MMSpreadsheetView/badge.png"/><br/>
+[![Badge w/ Version](https://cocoapod-badges.herokuapp.com/v/MMSpreadsheetView/badge.png)](https://cocoadocs.org/docsets/MMSpreadsheetView)
+[![Badge w/ Platform](https://cocoapod-badges.herokuapp.com/p/MMSpreadsheetView/badge.svg)](https://cocoadocs.org/docsets/MMSpreadsheetView)
 You can install MMSpreadsheetView in your project by using [CocoaPods](https://github.com/cocoapods/cocoapods):
 
 ```Ruby
-pod 'MMSpreadsheetView', '~> 0.0.1'
+pod 'MMSpreadsheetView', '~> 0.0.2'
 ```
 
 ---
@@ -76,5 +77,5 @@ We'd love to hear feedback on the library. Create Github issues, or hit us up on
 
 ---
 
-##License
+##License ![License MIT](https://go-shields.herokuapp.com/license-MIT-blue.png)
 `MMSpreadsheetView` is available under the MIT license. See the LICENSE file for more info.
