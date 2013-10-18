@@ -384,6 +384,16 @@ const static NSUInteger MMScrollIndicatorTag = 12345;
     }
 }
 
+#pragma mark - bounces property setter
+
+- (void)setBounces:(BOOL)bounces {
+    _bounces = bounces;
+    self.upperLeftCollectionView.bounces = bounces;
+    self.upperRightCollectionView.bounces = bounces;
+    self.lowerLeftCollectionView.bounces = bounces;
+    self.lowerRightCollectionView.bounces = bounces;
+}
+
 #pragma mark - DataSource property setter
 
 - (void)setDataSource:(id<MMSpreadsheetViewDataSource>)dataSource {

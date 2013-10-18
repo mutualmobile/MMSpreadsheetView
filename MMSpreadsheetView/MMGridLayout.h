@@ -39,4 +39,11 @@
  */
 @property (nonatomic, assign) CGSize itemSize;
 
+/**
+ The space between cells.
+ 
+ @discussion This allows for setting the spacing between cells. Lines are not drawn, but show the background of the collection view. The layout is invalidated when the cellSpacing is changed. Default is 1.
+ */
+@property (nonatomic, assign) CGFloat cellSpacing;
+
 @end

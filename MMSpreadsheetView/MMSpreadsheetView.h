@@ -326,4 +326,15 @@
  */
 - (void)flashScrollIndicators;
 
+///---------------------------------------
+/// @name Scroll View Properties
+///---------------------------------------
+
+/**
+ A Boolean value that controls whether the spreadsheet view bounces past the edge of content and back again.
+ 
+ @discussion If the value of this property is YES, the spreadsheet view bounces when it encounters a boundary of the content. Bouncing visually indicates that scrolling has reached an edge of the content. If the value is NO, scrolling stops immediately at the content boundary without bouncing. The default value is YES.
+ */
+@property (nonatomic, assign) BOOL bounces;
+
 @end

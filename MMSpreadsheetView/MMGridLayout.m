@@ -34,13 +34,19 @@
 - (id)init {
     self = [super init];
     if (self) {
+        _cellSpacing = 1.0f;
         _itemSize = CGSizeMake(120.0f, 120.0f);
     }
     return self;
 }
 
 - (void)setItemSize:(CGSize)itemSize {
-    _itemSize = CGSizeMake(itemSize.width + 1.0f, itemSize.height + 1.0f);
+    _itemSize = CGSizeMake(itemSize.width + self.cellSpacing, itemSize.height + self.cellSpacing);
+    [self invalidateLayout];
+}
+
+- (void)setCellSpacing:(CGFloat)cellSpacing {
+    _cellSpacing = cellSpacing;
     [self invalidateLayout];
 }
 
@@ -88,7 +94,7 @@
 
 - (UICollectionViewLayoutAttributes *)layoutAttributesForItemAtIndexPath:(NSIndexPath *)indexPath {
     UICollectionViewLayoutAttributes *attributes = [UICollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:indexPath];
-    attributes.frame = CGRectMake(indexPath.item * self.itemSize.width, indexPath.section * self.itemSize.height, self.itemSize.width-1.0f, self.itemSize.height-1.0f);
+    attributes.frame = CGRectMake(indexPath.item * self.itemSize.width, indexPath.section * self.itemSize.height, self.itemSize.width-self.cellSpacing, self.itemSize.height-self.cellSpacing);
     return attributes;
 }
 
