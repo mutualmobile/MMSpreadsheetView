@@ -18,7 +18,7 @@ Official appledoc documentation can be found at [CocoaDocs](http://cocoadocs.org
 You can install MMSpreadsheetView in your project by using [CocoaPods](https://github.com/cocoapods/cocoapods):
 
 ```Ruby
-pod 'MMSpreadsheetView', '~> 0.0.2'
+pod 'MMSpreadsheetView', '~> 0.0.3'
 ```
 
 ---
