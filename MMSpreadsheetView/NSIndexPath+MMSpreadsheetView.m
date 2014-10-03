@@ -22,11 +22,13 @@
 
 @implementation NSIndexPath (MMSpreadsheetView)
 
-- (NSInteger)mmSpreadsheetRow {
+- (NSInteger)mmSpreadsheetRow
+{
     return self.section;
 }
 
-- (NSInteger)mmSpreadsheetColumn {
+- (NSInteger)mmSpreadsheetColumn
+{
     return self.row;
 }
 

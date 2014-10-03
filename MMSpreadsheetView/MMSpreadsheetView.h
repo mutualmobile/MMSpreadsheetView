@@ -217,6 +217,14 @@
  */
 @property (nonatomic, weak) id<MMSpreadsheetViewDataSource> dataSource;
 
+/**
+ The identifier that determines whether the view supports state restoration.
+ 
+ @discussion This property indicates whether state information in the view should be preserved; it is also used to identify the view during the restoration process. The value of this property is nil by default, which indicates that the view’s state does not need to be saved. Assigning a string object to the property lets the owning view controller know that the view has relevant state information to save.
+ 
+ */
+@property (nonatomic, copy) NSString *restorationIdentifier;
+
 
 ///---------------------------------------
 /// @name Initializing & Setup
