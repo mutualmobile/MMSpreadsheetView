@@ -513,7 +513,11 @@ const static NSUInteger MMScrollIndicatorTag = 12345;
             if (indicatorHeight < MMSpreadsheetViewScrollIndicatorMinimum) {
                 indicatorHeight = MMSpreadsheetViewScrollIndicatorMinimum;
             }
-            CGFloat indicatorOffsetY = collectionView.contentOffset.y / (contentSize.height - collectionViewFrame.size.height) * (scrollIndicator.frame.size.height - indicatorHeight);
+            CGFloat divideByZeroOffset = 0.0f;
+            if (contentSize.height == collectionViewFrame.size.height) {
+                divideByZeroOffset = 1.0f;
+            }
+            CGFloat indicatorOffsetY = collectionView.contentOffset.y / (contentSize.height - collectionViewFrame.size.height + divideByZeroOffset) * (scrollIndicator.frame.size.height - indicatorHeight);
             indicatorView.frame = CGRectMake(0.0f,
                                              indicatorOffsetY,
                                              MMSpreadsheetViewScrollIndicatorWidth,
@@ -538,11 +542,11 @@ const static NSUInteger MMScrollIndicatorTag = 12345;
             if (indicatorWidth < MMSpreadsheetViewScrollIndicatorMinimum) {
                 indicatorWidth = MMSpreadsheetViewScrollIndicatorMinimum;
             }
-            CGFloat divZeroOffset = 0.0f;
+            CGFloat divideByZeroOffset = 0.0f;
             if (contentSize.width == collectionViewFrame.size.width) {
-                divZeroOffset = 1.0f;
+                divideByZeroOffset = 1.0f;
             }
-            CGFloat indicatorOffsetX = collectionView.contentOffset.x / (contentSize.width - collectionViewFrame.size.width + divZeroOffset) * (scrollIndicator.frame.size.width-indicatorWidth);
+            CGFloat indicatorOffsetX = collectionView.contentOffset.x / (contentSize.width - collectionViewFrame.size.width + divideByZeroOffset) * (scrollIndicator.frame.size.width-indicatorWidth);
             indicatorView.frame = CGRectMake(indicatorOffsetX,
                                              0.0f,
                                              indicatorWidth,
