@@ -508,7 +508,8 @@ const static NSUInteger MMScrollIndicatorTag = 12345;
         
         if (collectionViewFrame.size.height > contentSize.height) {
             indicatorView.frame = CGRectZero;
-        } else {
+        }
+        else {
             CGFloat indicatorHeight = collectionViewFrame.size.height / contentSize.height * scrollIndicator.frame.size.height;
             if (indicatorHeight < MMSpreadsheetViewScrollIndicatorMinimum) {
                 indicatorHeight = MMSpreadsheetViewScrollIndicatorMinimum;
@@ -537,7 +538,8 @@ const static NSUInteger MMScrollIndicatorTag = 12345;
 
         if (collectionView.frame.size.width > contentSize.width) {
             indicatorView.frame = CGRectZero;
-        } else {
+        }
+        else {
             CGFloat indicatorWidth = collectionViewFrame.size.width/contentSize.width * scrollIndicator.frame.size.width;
             if (indicatorWidth < MMSpreadsheetViewScrollIndicatorMinimum) {
                 indicatorWidth = MMSpreadsheetViewScrollIndicatorMinimum;
@@ -568,7 +570,8 @@ const static NSUInteger MMScrollIndicatorTag = 12345;
         case MMSpreadsheetHeaderConfigurationColumnOnly:
             if (indexPath.mmSpreadsheetColumn >= self.headerColumnCount) {
                 collectionView = self.lowerRightCollectionView;
-            } else {
+            }
+            else {
                 collectionView = self.lowerLeftCollectionView;
             }
             break;
@@ -586,14 +589,16 @@ const static NSUInteger MMScrollIndicatorTag = 12345;
             if (indexPath.mmSpreadsheetRow >= self.headerRowCount) {
                 if (indexPath.mmSpreadsheetColumn >= self.headerColumnCount) {
                     collectionView = self.lowerRightCollectionView;
-                } else {
+                }
+                else {
                     collectionView = self.lowerLeftCollectionView;
                 }
             }
             else {
                 if (indexPath.mmSpreadsheetColumn >= self.headerColumnCount) {
                     collectionView = self.upperRightCollectionView;
-                } else {
+                }
+                else {
                     collectionView = self.upperLeftCollectionView;
                 }
             }
@@ -778,12 +783,14 @@ const static NSUInteger MMScrollIndicatorTag = 12345;
     if (self.selectedItemCollectionView != nil) {
         if (collectionView == self.selectedItemCollectionView) {
             self.selectedItemIndexPath = indexPath;
-        } else {
+        }
+        else {
             [self.selectedItemCollectionView deselectItemAtIndexPath:self.selectedItemIndexPath animated:NO];
             self.selectedItemCollectionView = collectionView;
             self.selectedItemIndexPath = indexPath;
         }
-    } else {
+    }
+    else {
         self.selectedItemCollectionView = collectionView;
         self.selectedItemIndexPath = indexPath;
     }
@@ -839,7 +846,8 @@ const static NSUInteger MMScrollIndicatorTag = 12345;
                 [self lowerRightCollectionViewDidScrollForScrollView:scrollView];
                 break;
         }
-    } else {
+    }
+    else {
         [scrollView setContentOffset:scrollView.contentOffset animated:NO];
     }
 }
@@ -857,7 +865,8 @@ const static NSUInteger MMScrollIndicatorTag = 12345;
         rect = self.upperRightContainerView.frame;
         rect.origin.y = 0-scrollView.contentOffset.y;
         self.upperRightContainerView.frame = rect;
-    } else {
+    }
+    else {
         CGRect rect = self.upperLeftContainerView.frame;
         rect.origin.y = 0.0f;
         self.upperLeftContainerView.frame = rect;
@@ -881,7 +890,8 @@ const static NSUInteger MMScrollIndicatorTag = 12345;
         rect = self.lowerLeftContainerView.frame;
         rect.origin.x = 0-scrollView.contentOffset.x;
         self.lowerLeftContainerView.frame = rect;
-    } else {
+    }
+    else {
         CGRect rect = self.upperLeftContainerView.frame;
         rect.origin.x = 0.0f;
         self.upperLeftContainerView.frame = rect;
@@ -910,7 +920,8 @@ const static NSUInteger MMScrollIndicatorTag = 12345;
         rect = self.upperRightContainerView.frame;
         rect.origin.y = 0-scrollView.contentOffset.y;
         self.upperRightContainerView.frame = rect;
-    } else {
+    }
+    else {
         CGRect rect = self.upperLeftContainerView.frame;
         rect.origin.y = 0.0f;
         self.upperLeftContainerView.frame = rect;
@@ -928,7 +939,8 @@ const static NSUInteger MMScrollIndicatorTag = 12345;
         rect = self.lowerLeftContainerView.frame;
         rect.origin.x = 0-scrollView.contentOffset.x;
         self.lowerLeftContainerView.frame = rect;
-    } else {
+    }
+    else {
         CGRect rect = self.upperLeftContainerView.frame;
         rect.origin.x = 0.0f;
         
@@ -941,7 +953,6 @@ const static NSUInteger MMScrollIndicatorTag = 12345;
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
 {
-    NSLog(@"%s", __PRETTY_FUNCTION__);
     [self setScrollEnabledValue:NO scrollView:scrollView];
     
     if (self.controllingScrollView != scrollView) {
@@ -958,7 +969,6 @@ const static NSUInteger MMScrollIndicatorTag = 12345;
 
 - (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset
 {
-    NSLog(@"%s VEL: %@", __PRETTY_FUNCTION__, NSStringFromCGPoint(velocity));
     // Block UI if we're in a bounce.
     // Without this, you can lock the scroll views in a scroll which looks weird.
     CGPoint toffset = *targetContentOffset;
@@ -967,7 +977,6 @@ const static NSUInteger MMScrollIndicatorTag = 12345;
             BOOL willBouncePastZeroY = velocity.y < 0.0f && !(toffset.y > 0.0f);
             BOOL willBouncePastMaxY = toffset.y > self.lowerLeftCollectionView.contentSize.height - self.lowerLeftCollectionView.frame.size.height - 0.1f && velocity.y > 0.0f;
             if (willBouncePastZeroY || willBouncePastMaxY || !self.bounces) {
-                NSLog(@"LL scroll: UP & LR lockout");
                 self.upperRightContainerView.userInteractionEnabled = NO;
                 self.lowerRightContainerView.userInteractionEnabled = NO;
                 self.lowerLeftBouncing = YES;
@@ -979,7 +988,6 @@ const static NSUInteger MMScrollIndicatorTag = 12345;
             BOOL willBouncePastZeroX = velocity.x < 0.0f && !(toffset.x > 0.0f);
             BOOL willBouncePastMaxX = toffset.x > self.upperRightCollectionView.contentSize.width - self.upperRightCollectionView.frame.size.width - 0.1f && velocity.x > 0.0f;
             if (willBouncePastZeroX || willBouncePastMaxX || !self.bounces) {
-                NSLog(@"UR scroll: LL & LR lockout");
                 self.lowerRightContainerView.userInteractionEnabled = NO;
                 self.lowerLeftContainerView.userInteractionEnabled = NO;
                 self.upperRightBouncing = YES;
@@ -994,7 +1002,6 @@ const static NSUInteger MMScrollIndicatorTag = 12345;
             BOOL willBouncePastMaxY = toffset.y > self.lowerLeftCollectionView.contentSize.height - self.lowerLeftCollectionView.frame.size.height - 0.1f && velocity.y > 0.0f;
             if (willBouncePastZeroX || willBouncePastMaxX ||
                 willBouncePastZeroY || willBouncePastMaxY || !self.bounces) {
-                NSLog(@"LR scroll: UR & LL lockout");
                 self.upperRightContainerView.userInteractionEnabled = NO;
                 self.lowerLeftContainerView.userInteractionEnabled = NO;
                 self.lowerRightBouncing = YES;
@@ -1011,7 +1018,6 @@ const static NSUInteger MMScrollIndicatorTag = 12345;
 
 - (void)scrollViewDidStop:(UIScrollView *)scrollView
 {
-    NSLog(@"%s", __PRETTY_FUNCTION__);
     self.upperRightContainerView.userInteractionEnabled = YES;
     self.lowerRightContainerView.userInteractionEnabled = YES;
     self.lowerLeftContainerView.userInteractionEnabled = YES;
