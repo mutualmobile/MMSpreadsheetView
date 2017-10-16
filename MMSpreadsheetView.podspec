@@ -5,7 +5,7 @@ Pod::Spec.new do |s|
   s.homepage     = "https://github.com/mutualmobile/MMSpreadsheetView"
   s.license      = { :type => 'MIT', :file => 'LICENSE' }
   s.author       = { "Jeff Lacey" => "jeff.lacey@mutualmobile.com" }
-  s.source       = { :git => "https://github.com/mutualmobile/MMSpreadsheetView.git", :tag => "0.0.3" }
+  s.source       = { :git => "https://github.com/mutualmobile/MMSpreadsheetView.git", :tag => s.version.to_s }
   s.platform     = :ios, '6.0'
   s.requires_arc = true
   s.source_files = 'MMSpreadsheetView/*.{h,m}'

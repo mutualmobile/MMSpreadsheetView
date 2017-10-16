@@ -35,7 +35,8 @@
 
 @implementation MMViewController
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     
     NSUInteger rows = 11;
@@ -47,7 +48,7 @@
     for (NSUInteger rowNumber = 0; rowNumber < rows; rowNumber++) {
         NSMutableArray *row = [NSMutableArray array];
         for (NSUInteger columnNumber = 0; columnNumber < cols; columnNumber++) {
-            [row addObject:[NSString stringWithFormat:@"R%i:C%i", rowNumber, columnNumber]];
+            [row addObject:[NSString stringWithFormat:@"R%lu:C%lu", (unsigned long)rowNumber, (unsigned long)columnNumber]];
         }
         [self.tableData addObject:row];
     }
@@ -56,6 +57,8 @@
 
     // Create the spreadsheet in code.
     MMSpreadsheetView *spreadSheetView = [[MMSpreadsheetView alloc] initWithNumberOfHeaderRows:1 numberOfHeaderColumns:1 frame:self.view.bounds];
+    self.restorationIdentifier = NSStringFromClass([self class]);
+    spreadSheetView.restorationIdentifier = @"MMSpreadsheetView";
 
     // Register your cell classes.
     [spreadSheetView registerCellClass:[MMGridCell class] forCellWithReuseIdentifier:@"GridCell"];
@@ -65,19 +68,22 @@
     // Set the delegate & datasource for the spreadsheet view.
     spreadSheetView.delegate = self;
     spreadSheetView.dataSource = self;
+    spreadSheetView.bounces = NO;
     
     // Add the spreadsheet view as a subview.
     [self.view addSubview:spreadSheetView];
 }
 
-- (void)didReceiveMemoryWarning {
+- (void)didReceiveMemoryWarning
+{
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
 #pragma mark - MMSpreadsheetViewDataSource
 
-- (CGSize)spreadsheetView:(MMSpreadsheetView *)spreadsheetView sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+- (CGSize)spreadsheetView:(MMSpreadsheetView *)spreadsheetView sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+{
     CGFloat leftColumnWidth = 320.0f;
     CGFloat topRowHeight = 150.0f;
     CGFloat gridCellWidth = 124.0f;
@@ -101,18 +107,21 @@
     return CGSizeMake(gridCellWidth, gridCellHeight);
 }
 
-- (NSInteger)numberOfRowsInSpreadsheetView:(MMSpreadsheetView *)spreadsheetView {
+- (NSInteger)numberOfRowsInSpreadsheetView:(MMSpreadsheetView *)spreadsheetView
+{
     NSInteger rows = [self.tableData count];
     return rows;
 }
 
-- (NSInteger)numberOfColumnsInSpreadsheetView:(MMSpreadsheetView *)spreadsheetView {
+- (NSInteger)numberOfColumnsInSpreadsheetView:(MMSpreadsheetView *)spreadsheetView
+{
     NSArray *rowData = [self.tableData lastObject];
     NSInteger cols = [rowData count];
     return cols;
 }
 
-- (UICollectionViewCell *)spreadsheetView:(MMSpreadsheetView *)spreadsheetView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+- (UICollectionViewCell *)spreadsheetView:(MMSpreadsheetView *)spreadsheetView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+{
     UICollectionViewCell *cell = nil;
     if (indexPath.mmSpreadsheetRow == 0 && indexPath.mmSpreadsheetColumn == 0) {
         // Upper left.
@@ -128,14 +137,14 @@
         // Upper right.
         cell = [spreadsheetView dequeueReusableCellWithReuseIdentifier:@"TopRowCell" forIndexPath:indexPath];
         MMTopRowCell *tr = (MMTopRowCell *)cell;
-        tr.textLabel.text = [NSString stringWithFormat:@"TR: %i", indexPath.mmSpreadsheetColumn];
+        tr.textLabel.text = [NSString stringWithFormat:@"TR: %li", (long)indexPath.mmSpreadsheetColumn];
         cell.backgroundColor = [UIColor whiteColor];
     }
     else if (indexPath.mmSpreadsheetRow > 0 && indexPath.mmSpreadsheetColumn == 0) {
         // Lower left.
         cell = [spreadsheetView dequeueReusableCellWithReuseIdentifier:@"LeftColumnCell" forIndexPath:indexPath];
         MMLeftColumnCell *lc = (MMLeftColumnCell *)cell;
-        lc.textLabel.text = [NSString stringWithFormat:@"Left Column: %i", indexPath.mmSpreadsheetRow];
+        lc.textLabel.text = [NSString stringWithFormat:@"Left Column: %li", (long)indexPath.mmSpreadsheetRow];
         BOOL isDarker = indexPath.mmSpreadsheetRow % 2 == 0;
         if (isDarker) {
             cell.backgroundColor = [UIColor colorWithRed:222.0f / 255.0f green:243.0f / 255.0f blue:250.0f / 255.0f alpha:1.0f];
@@ -163,7 +172,8 @@
 
 #pragma mark - MMSpreadsheetViewDelegate
 
-- (void)spreadsheetView:(MMSpreadsheetView *)spreadsheetView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+- (void)spreadsheetView:(MMSpreadsheetView *)spreadsheetView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
     if ([self.selectedGridCells containsObject:indexPath]) {
         [self.selectedGridCells removeObject:indexPath];
         [spreadsheetView deselectItemAtIndexPath:indexPath animated:YES];
@@ -173,11 +183,13 @@
     }
 }
 
-- (BOOL)spreadsheetView:(MMSpreadsheetView *)spreadsheetView shouldShowMenuForItemAtIndexPath:(NSIndexPath *)indexPath {
+- (BOOL)spreadsheetView:(MMSpreadsheetView *)spreadsheetView shouldShowMenuForItemAtIndexPath:(NSIndexPath *)indexPath
+{
     return YES;
 }
 
-- (BOOL)spreadsheetView:(MMSpreadsheetView *)spreadsheetView canPerformAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
+- (BOOL)spreadsheetView:(MMSpreadsheetView *)spreadsheetView canPerformAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender
+{
     
     /*
      These are the selectors the sender (a UIMenuController) sends by default.
@@ -209,7 +221,8 @@
     return NO;
 }
 
-- (void)spreadsheetView:(MMSpreadsheetView *)spreadsheetView performAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
+- (void)spreadsheetView:(MMSpreadsheetView *)spreadsheetView performAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender
+{
     NSMutableArray *rowData = [self.tableData objectAtIndex:indexPath.mmSpreadsheetRow];
     if (action == @selector(cut:)) {
         self.cellDataBuffer = [rowData objectAtIndex:indexPath.row];

@@ -23,14 +23,16 @@
 #import "MMGridLayout.h"
 #import "NSIndexPath+MMSpreadsheetView.h"
 
-typedef NS_ENUM(NSUInteger, MMSpreadsheetViewCollection) {
+typedef NS_ENUM(NSUInteger, MMSpreadsheetViewCollection)
+{
     MMSpreadsheetViewCollectionUpperLeft = 1,
     MMSpreadsheetViewCollectionUpperRight,
     MMSpreadsheetViewCollectionLowerLeft,
     MMSpreadsheetViewCollectionLowerRight,
 };
 
-typedef NS_ENUM(NSUInteger, MMSpreadsheetHeaderConfiguration) {
+typedef NS_ENUM(NSUInteger, MMSpreadsheetHeaderConfiguration)
+{
     MMSpreadsheetHeaderConfigurationNone = 0,
     MMSpreadsheetHeaderConfigurationColumnOnly,
     MMSpreadsheetHeaderConfigurationRowOnly,
@@ -76,17 +78,20 @@ const static NSUInteger MMScrollIndicatorTag = 12345;
 
 @implementation MMSpreadsheetView
 
-- (id)init {
+- (instancetype)init
+{
     return [self initWithNumberOfHeaderRows:0 numberOfHeaderColumns:0 frame:CGRectZero];
 }
 
-- (id)initWithFrame:(CGRect)frame {
+- (instancetype)initWithFrame:(CGRect)frame
+{
     return [self initWithNumberOfHeaderRows:0 numberOfHeaderColumns:0 frame:frame];
 }
 
 #pragma mark - MMSpreadsheetView designated initializer
 
-- (id)initWithNumberOfHeaderRows:(NSUInteger)headerRowCount numberOfHeaderColumns:(NSUInteger)headerColumnCount frame:(CGRect)frame {
+- (instancetype)initWithNumberOfHeaderRows:(NSUInteger)headerRowCount numberOfHeaderColumns:(NSUInteger)headerColumnCount frame:(CGRect)frame
+{
     self = [super initWithFrame:frame];
     if (self) {
         _scrollIndicatorInsets = UIEdgeInsetsZero;
@@ -116,7 +121,8 @@ const static NSUInteger MMScrollIndicatorTag = 12345;
 
 #pragma mark - Public Functions
 
-- (UICollectionViewCell *)dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:(NSIndexPath *)indexPath {
+- (UICollectionViewCell *)dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:(NSIndexPath *)indexPath
+{
     NSIndexPath *collectionViewIndexPath = [self collectionViewIndexPathFromDataSourceIndexPath:indexPath];
     UICollectionView *collectionView = [self collectionViewForDataSourceIndexPath:indexPath];
     NSAssert(collectionView, @"No collectionView Returned!");
@@ -125,35 +131,40 @@ const static NSUInteger MMScrollIndicatorTag = 12345;
     return cell;
 }
 
-- (void)registerCellClass:(Class)cellClass forCellWithReuseIdentifier:(NSString *)identifier {
+- (void)registerCellClass:(Class)cellClass forCellWithReuseIdentifier:(NSString *)identifier
+{
     [self.upperLeftCollectionView registerClass:cellClass forCellWithReuseIdentifier:identifier];
     [self.upperRightCollectionView registerClass:cellClass forCellWithReuseIdentifier:identifier];
     [self.lowerLeftCollectionView registerClass:cellClass forCellWithReuseIdentifier:identifier];
     [self.lowerRightCollectionView registerClass:cellClass forCellWithReuseIdentifier:identifier];
 }
 
-- (void)deselectItemAtIndexPath:(NSIndexPath *)indexPath animated:(BOOL)animated {
+- (void)deselectItemAtIndexPath:(NSIndexPath *)indexPath animated:(BOOL)animated
+{
     NSIndexPath *collectionViewIndexPath = [self collectionViewIndexPathFromDataSourceIndexPath:indexPath];
     UICollectionView *collectionView = [self collectionViewForDataSourceIndexPath:indexPath];
     NSAssert(collectionView, @"No collectionView Returned!");
     [collectionView deselectItemAtIndexPath:collectionViewIndexPath animated:animated];
 }
 
-- (void)reloadData {
+- (void)reloadData
+{
     [self.upperLeftCollectionView reloadData];
     [self.upperRightCollectionView reloadData];
     [self.lowerLeftCollectionView reloadData];
     [self.lowerRightCollectionView reloadData];
 }
 
-- (void)flashScrollIndicators {
+- (void)flashScrollIndicators
+{
     [self showScrollIndicators];
     [self performSelector:@selector(hideScrollIndicators) withObject:nil afterDelay:1];
 }
 
 #pragma mark - View Setup functions
 
-- (void)setupSubviews {
+- (void)setupSubviews
+{
     switch (self.spreadsheetHeaderConfiguration) {
         case MMSpreadsheetHeaderConfigurationNone:
             [self setupLowerRightView];
@@ -184,7 +195,8 @@ const static NSUInteger MMScrollIndicatorTag = 12345;
     self.horizontalScrollIndicator = [self setupScrollIndicator];
 }
 
-- (void)setupContainerSubview:(UIView *)container collectionView:(UICollectionView *)collectionView tag:(NSInteger)tag {
+- (void)setupContainerSubview:(UIView *)container collectionView:(UICollectionView *)collectionView tag:(NSInteger)tag
+{
     container.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     [self addSubview:container];
     
@@ -198,13 +210,15 @@ const static NSUInteger MMScrollIndicatorTag = 12345;
     [container addSubview:collectionView];
 }
 
-- (UICollectionView *)setupCollectionViewWithGridLayout {
+- (UICollectionView *)setupCollectionViewWithGridLayout
+{
     MMGridLayout *layout = [[MMGridLayout alloc] init];
     UICollectionView *collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
     return collectionView;
 }
 
-- (void)setupUpperLeftView {
+- (void)setupUpperLeftView
+{
     self.upperLeftContainerView = [[UIView alloc] initWithFrame:CGRectZero];
     self.upperLeftCollectionView = [self setupCollectionViewWithGridLayout];
     [self setupContainerSubview:self.upperLeftContainerView
@@ -213,7 +227,8 @@ const static NSUInteger MMScrollIndicatorTag = 12345;
     self.upperLeftCollectionView.scrollEnabled = NO;
 }
 
-- (void)setupUpperRightView {
+- (void)setupUpperRightView
+{
     self.upperRightContainerView = [[UIView alloc] initWithFrame:CGRectZero];
     self.upperRightCollectionView = [self setupCollectionViewWithGridLayout];
     [self.upperRightCollectionView.panGestureRecognizer addTarget:self
@@ -223,7 +238,8 @@ const static NSUInteger MMScrollIndicatorTag = 12345;
                             tag:MMSpreadsheetViewCollectionUpperRight];
 }
 
-- (void)setupLowerLeftView {
+- (void)setupLowerLeftView
+{
     self.lowerLeftContainerView = [[UIView alloc] initWithFrame:CGRectZero];
     self.lowerLeftCollectionView = [self setupCollectionViewWithGridLayout];
     [self.lowerLeftCollectionView.panGestureRecognizer addTarget:self
@@ -233,7 +249,8 @@ const static NSUInteger MMScrollIndicatorTag = 12345;
                             tag:MMSpreadsheetViewCollectionLowerLeft];
 }
 
-- (void)setupLowerRightView {
+- (void)setupLowerRightView
+{
     self.lowerRightContainerView = [[UIView alloc] initWithFrame:CGRectZero];
     self.lowerRightCollectionView = [self setupCollectionViewWithGridLayout];
     [self.lowerRightCollectionView.panGestureRecognizer addTarget:self
@@ -243,7 +260,8 @@ const static NSUInteger MMScrollIndicatorTag = 12345;
                             tag:MMSpreadsheetViewCollectionLowerRight];
 }
 
-- (void)layoutSubviews {
+- (void)layoutSubviews
+{
     [super layoutSubviews];
     NSIndexPath *indexPathZero = [NSIndexPath indexPathForItem:0 inSection:0];
     switch (self.spreadsheetHeaderConfiguration) {
@@ -345,7 +363,8 @@ const static NSUInteger MMScrollIndicatorTag = 12345;
 
 #pragma mark - UIPanGestureRecognizer callbacks
 
-- (void)handleUpperRightPanGesture:(UIPanGestureRecognizer *)recognizer {
+- (void)handleUpperRightPanGesture:(UIPanGestureRecognizer *)recognizer
+{
     if (recognizer.state == UIGestureRecognizerStateBegan) {
         self.lowerLeftContainerView.userInteractionEnabled = NO;
         self.lowerRightContainerView.userInteractionEnabled = NO;
@@ -358,7 +377,8 @@ const static NSUInteger MMScrollIndicatorTag = 12345;
     }
 }
 
-- (void)handleLowerLeftPanGesture:(UIPanGestureRecognizer *)recognizer {
+- (void)handleLowerLeftPanGesture:(UIPanGestureRecognizer *)recognizer
+{
     if (recognizer.state == UIGestureRecognizerStateBegan) {
         self.upperRightContainerView.userInteractionEnabled = NO;
         self.lowerRightContainerView.userInteractionEnabled = NO;
@@ -371,7 +391,8 @@ const static NSUInteger MMScrollIndicatorTag = 12345;
     }
 }
 
-- (void)handleLowerRightPanGesture:(UIPanGestureRecognizer *)recognizer {
+- (void)handleLowerRightPanGesture:(UIPanGestureRecognizer *)recognizer
+{
     if (recognizer.state == UIGestureRecognizerStateBegan) {
         self.upperRightContainerView.userInteractionEnabled = NO;
         self.lowerLeftContainerView.userInteractionEnabled = NO;
@@ -384,9 +405,18 @@ const static NSUInteger MMScrollIndicatorTag = 12345;
     }
 }
 
-#pragma mark - bounces property setter
+#pragma mark - property setters
 
-- (void)setBounces:(BOOL)bounces {
+- (void)setRestorationIdentifier:(NSString *)restorationIdentifier
+{
+    _restorationIdentifier = [restorationIdentifier copy];
+    self.upperRightCollectionView.restorationIdentifier = [NSString stringWithFormat:@"%@-upperRightCollectionView", restorationIdentifier];
+    self.lowerLeftCollectionView.restorationIdentifier = [NSString stringWithFormat:@"%@-lowerLeftCollectionView", restorationIdentifier];
+    self.lowerRightCollectionView.restorationIdentifier = [NSString stringWithFormat:@"%@-lowerRightCollectionView", restorationIdentifier];
+}
+
+- (void)setBounces:(BOOL)bounces
+{
     _bounces = bounces;
     self.upperLeftCollectionView.bounces = bounces;
     self.upperRightCollectionView.bounces = bounces;
@@ -394,9 +424,8 @@ const static NSUInteger MMScrollIndicatorTag = 12345;
     self.lowerRightCollectionView.bounces = bounces;
 }
 
-#pragma mark - DataSource property setter
-
-- (void)setDataSource:(id<MMSpreadsheetViewDataSource>)dataSource {
+- (void)setDataSource:(id<MMSpreadsheetViewDataSource>)dataSource
+{
     _dataSource = dataSource;
     if (self.upperLeftCollectionView) {
         [self initializeCollectionViewLayoutItemSize:self.upperLeftCollectionView];
@@ -419,7 +448,8 @@ const static NSUInteger MMScrollIndicatorTag = 12345;
     NSAssert(self.headerRowCount < maxRows, @"Invalid configuration: number of header rows must be less than (dataSource) numberOfRowsInSpreadsheetView");
 }
 
-- (void)initializeCollectionViewLayoutItemSize:(UICollectionView *)collectionView {
+- (void)initializeCollectionViewLayoutItemSize:(UICollectionView *)collectionView
+{
     NSIndexPath *indexPathZero = [NSIndexPath indexPathForItem:0 inSection:0];
     MMGridLayout *layout = (MMGridLayout *)collectionView.collectionViewLayout;
     CGSize size = [self collectionView:collectionView
@@ -430,7 +460,8 @@ const static NSUInteger MMScrollIndicatorTag = 12345;
 
 #pragma mark - Scroll Indicator
 
-- (UIView *)setupScrollIndicator {
+- (UIView *)setupScrollIndicator
+{
     UIView *scrollIndicator = [[UIView alloc] initWithFrame:CGRectZero];
     scrollIndicator.alpha = 0.0f;
     scrollIndicator.layer.cornerRadius = MMSpreadsheetViewScrollIndicatorWidth/2;
@@ -446,7 +477,8 @@ const static NSUInteger MMScrollIndicatorTag = 12345;
     return scrollIndicator;
 }
 
-- (void)showScrollIndicators {
+- (void)showScrollIndicators
+{
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:_cmd object:nil];
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(hideScrollIndicators) object:nil];
     [UIView animateWithDuration:0.4f animations:^{
@@ -455,7 +487,8 @@ const static NSUInteger MMScrollIndicatorTag = 12345;
     }];
 }
 
-- (void)hideScrollIndicators {
+- (void)hideScrollIndicators
+{
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:_cmd object:nil];
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(showScrollIndicators) object:nil];
     [UIView animateWithDuration:0.5f animations:^{
@@ -464,7 +497,8 @@ const static NSUInteger MMScrollIndicatorTag = 12345;
     }];
 }
 
-- (void)updateVerticalScrollIndicator {
+- (void)updateVerticalScrollIndicator
+{
     if (self.showsVerticalScrollIndicator) {
         UIView *scrollIndicator = self.verticalScrollIndicator;
         UIView *indicatorView = [scrollIndicator viewWithTag:MMScrollIndicatorTag];
@@ -474,12 +508,17 @@ const static NSUInteger MMScrollIndicatorTag = 12345;
         
         if (collectionViewFrame.size.height > contentSize.height) {
             indicatorView.frame = CGRectZero;
-        } else {
+        }
+        else {
             CGFloat indicatorHeight = collectionViewFrame.size.height / contentSize.height * scrollIndicator.frame.size.height;
             if (indicatorHeight < MMSpreadsheetViewScrollIndicatorMinimum) {
                 indicatorHeight = MMSpreadsheetViewScrollIndicatorMinimum;
             }
-            CGFloat indicatorOffsetY = collectionView.contentOffset.y / (contentSize.height - collectionViewFrame.size.height) * (scrollIndicator.frame.size.height - indicatorHeight);
+            CGFloat divideByZeroOffset = 0.0f;
+            if (contentSize.height == collectionViewFrame.size.height) {
+                divideByZeroOffset = 1.0f;
+            }
+            CGFloat indicatorOffsetY = collectionView.contentOffset.y / (contentSize.height - collectionViewFrame.size.height + divideByZeroOffset) * (scrollIndicator.frame.size.height - indicatorHeight);
             indicatorView.frame = CGRectMake(0.0f,
                                              indicatorOffsetY,
                                              MMSpreadsheetViewScrollIndicatorWidth,
@@ -488,7 +527,8 @@ const static NSUInteger MMScrollIndicatorTag = 12345;
     }
 }
 
-- (void)updateHorizontalScrollIndicator {
+- (void)updateHorizontalScrollIndicator
+{
     if (self.showsHorizontalScrollIndicator) {
         UIView *scrollIndicator = self.horizontalScrollIndicator;
         UIView *indicatorView = [scrollIndicator viewWithTag:MMScrollIndicatorTag];
@@ -498,12 +538,17 @@ const static NSUInteger MMScrollIndicatorTag = 12345;
 
         if (collectionView.frame.size.width > contentSize.width) {
             indicatorView.frame = CGRectZero;
-        } else {
+        }
+        else {
             CGFloat indicatorWidth = collectionViewFrame.size.width/contentSize.width * scrollIndicator.frame.size.width;
             if (indicatorWidth < MMSpreadsheetViewScrollIndicatorMinimum) {
                 indicatorWidth = MMSpreadsheetViewScrollIndicatorMinimum;
             }
-            CGFloat indicatorOffsetX = collectionView.contentOffset.x / (contentSize.width - collectionViewFrame.size.width) * (scrollIndicator.frame.size.width-indicatorWidth);
+            CGFloat divideByZeroOffset = 0.0f;
+            if (contentSize.width == collectionViewFrame.size.width) {
+                divideByZeroOffset = 1.0f;
+            }
+            CGFloat indicatorOffsetX = collectionView.contentOffset.x / (contentSize.width - collectionViewFrame.size.width + divideByZeroOffset) * (scrollIndicator.frame.size.width-indicatorWidth);
             indicatorView.frame = CGRectMake(indicatorOffsetX,
                                              0.0f,
                                              indicatorWidth,
@@ -514,7 +559,8 @@ const static NSUInteger MMScrollIndicatorTag = 12345;
 
 #pragma mark - Custom functions that don't go anywhere else
 
-- (UICollectionView *)collectionViewForDataSourceIndexPath:(NSIndexPath *)indexPath {
+- (UICollectionView *)collectionViewForDataSourceIndexPath:(NSIndexPath *)indexPath
+{
     UICollectionView *collectionView = nil;
     switch (self.spreadsheetHeaderConfiguration) {
         case MMSpreadsheetHeaderConfigurationNone:
@@ -524,7 +570,8 @@ const static NSUInteger MMScrollIndicatorTag = 12345;
         case MMSpreadsheetHeaderConfigurationColumnOnly:
             if (indexPath.mmSpreadsheetColumn >= self.headerColumnCount) {
                 collectionView = self.lowerRightCollectionView;
-            } else {
+            }
+            else {
                 collectionView = self.lowerLeftCollectionView;
             }
             break;
@@ -542,14 +589,16 @@ const static NSUInteger MMScrollIndicatorTag = 12345;
             if (indexPath.mmSpreadsheetRow >= self.headerRowCount) {
                 if (indexPath.mmSpreadsheetColumn >= self.headerColumnCount) {
                     collectionView = self.lowerRightCollectionView;
-                } else {
+                }
+                else {
                     collectionView = self.lowerLeftCollectionView;
                 }
             }
             else {
                 if (indexPath.mmSpreadsheetColumn >= self.headerColumnCount) {
                     collectionView = self.upperRightCollectionView;
-                } else {
+                }
+                else {
                     collectionView = self.upperLeftCollectionView;
                 }
             }
@@ -562,7 +611,8 @@ const static NSUInteger MMScrollIndicatorTag = 12345;
     return collectionView;
 }
 
-- (NSIndexPath *)dataSourceIndexPathFromCollectionView:(UICollectionView *)collectionView indexPath:(NSIndexPath *)indexPath {
+- (NSIndexPath *)dataSourceIndexPathFromCollectionView:(UICollectionView *)collectionView indexPath:(NSIndexPath *)indexPath
+{
     NSInteger mmSpreadsheetRow = indexPath.mmSpreadsheetRow;
     NSInteger mmSpreadsheetColumn = indexPath.mmSpreadsheetColumn;
 
@@ -592,7 +642,8 @@ const static NSUInteger MMScrollIndicatorTag = 12345;
     return [NSIndexPath indexPathForItem:mmSpreadsheetColumn inSection:mmSpreadsheetRow];
 }
 
-- (NSIndexPath *)collectionViewIndexPathFromDataSourceIndexPath:(NSIndexPath *)indexPath {
+- (NSIndexPath *)collectionViewIndexPathFromDataSourceIndexPath:(NSIndexPath *)indexPath
+{
     UICollectionView *collectionView = [self collectionViewForDataSourceIndexPath:indexPath];
     NSAssert(collectionView, @"No collectionView Returned!");
     
@@ -623,7 +674,8 @@ const static NSUInteger MMScrollIndicatorTag = 12345;
     return [NSIndexPath indexPathForItem:mmSpreadsheetColumn inSection:mmSpreadsheetRow];
 }
 
-- (void)setScrollEnabledValue:(BOOL)scrollEnabled scrollView:(UIScrollView *)scrollView {
+- (void)setScrollEnabledValue:(BOOL)scrollEnabled scrollView:(UIScrollView *)scrollView
+{
     switch (scrollView.tag) {
         case MMSpreadsheetViewCollectionUpperLeft:
             // Don't think we need to do anything here
@@ -648,7 +700,8 @@ const static NSUInteger MMScrollIndicatorTag = 12345;
 
 #pragma mark - UICollectionViewDelegateFlowLayout
 
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+{
     NSIndexPath *dataSourceIndexPath = [self dataSourceIndexPathFromCollectionView:collectionView indexPath:indexPath];
     CGSize size = [self.dataSource spreadsheetView:self sizeForItemAtIndexPath:dataSourceIndexPath];
     return size;
@@ -656,7 +709,8 @@ const static NSUInteger MMScrollIndicatorTag = 12345;
 
 #pragma mark - UICollectionViewDataSource pass-through
 
-- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
+{
     NSInteger rowCount = [self.dataSource numberOfRowsInSpreadsheetView:self];
     NSInteger adjustedRows = 1;
     
@@ -685,7 +739,8 @@ const static NSUInteger MMScrollIndicatorTag = 12345;
     return adjustedRows;
 }
 
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
+{
     NSInteger items = 0;
     NSInteger columnCount = [self.dataSource numberOfColumnsInSpreadsheetView:self];
     
@@ -714,7 +769,8 @@ const static NSUInteger MMScrollIndicatorTag = 12345;
     return items;
 }
 
-- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+{
     NSIndexPath *dataSourceIndexPath = [self dataSourceIndexPathFromCollectionView:collectionView indexPath:indexPath];
     UICollectionViewCell *cell = [self.dataSource spreadsheetView:self cellForItemAtIndexPath:dataSourceIndexPath];
     return cell;
@@ -722,16 +778,19 @@ const static NSUInteger MMScrollIndicatorTag = 12345;
 
 #pragma mark - UICollectionViewDelegate
 
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
     if (self.selectedItemCollectionView != nil) {
         if (collectionView == self.selectedItemCollectionView) {
             self.selectedItemIndexPath = indexPath;
-        } else {
+        }
+        else {
             [self.selectedItemCollectionView deselectItemAtIndexPath:self.selectedItemIndexPath animated:NO];
             self.selectedItemCollectionView = collectionView;
             self.selectedItemIndexPath = indexPath;
         }
-    } else {
+    }
+    else {
         self.selectedItemCollectionView = collectionView;
         self.selectedItemIndexPath = indexPath;
     }
@@ -742,7 +801,8 @@ const static NSUInteger MMScrollIndicatorTag = 12345;
     }
 }
 
-- (BOOL)collectionView:(UICollectionView *)collectionView shouldShowMenuForItemAtIndexPath:(NSIndexPath *)indexPath {
+- (BOOL)collectionView:(UICollectionView *)collectionView shouldShowMenuForItemAtIndexPath:(NSIndexPath *)indexPath
+{
     NSIndexPath *dataSourceIndexPath = [self dataSourceIndexPathFromCollectionView:collectionView indexPath:indexPath];
     if ([self.delegate respondsToSelector:@selector(spreadsheetView:shouldShowMenuForItemAtIndexPath:)]) {
         return [self.delegate spreadsheetView:self shouldShowMenuForItemAtIndexPath:dataSourceIndexPath];
@@ -750,7 +810,8 @@ const static NSUInteger MMScrollIndicatorTag = 12345;
     return NO;
 }
 
-- (BOOL)collectionView:(UICollectionView *)collectionView canPerformAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
+- (BOOL)collectionView:(UICollectionView *)collectionView canPerformAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender
+{
     NSIndexPath *dataSourceIndexPath = [self dataSourceIndexPathFromCollectionView:collectionView indexPath:indexPath];
     if ([self.delegate respondsToSelector:@selector(spreadsheetView:canPerformAction:forItemAtIndexPath:withSender:)]) {
         return [self.delegate spreadsheetView:self canPerformAction:action forItemAtIndexPath:dataSourceIndexPath withSender:sender];
@@ -758,7 +819,8 @@ const static NSUInteger MMScrollIndicatorTag = 12345;
     return NO;
 }
 
-- (void)collectionView:(UICollectionView *)collectionView performAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
+- (void)collectionView:(UICollectionView *)collectionView performAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender
+{
     NSIndexPath *dataSourceIndexPath = [self dataSourceIndexPathFromCollectionView:collectionView indexPath:indexPath];
     if ([self.delegate respondsToSelector:@selector(spreadsheetView:performAction:forItemAtIndexPath:withSender:)]) {
         return [self.delegate spreadsheetView:self performAction:action forItemAtIndexPath:dataSourceIndexPath withSender:sender];
@@ -767,7 +829,8 @@ const static NSUInteger MMScrollIndicatorTag = 12345;
 
 #pragma mark - UIScrollViewDelegate
 
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
     if (scrollView == self.controllingScrollView) {
     
         switch (scrollView.tag) {
@@ -783,12 +846,14 @@ const static NSUInteger MMScrollIndicatorTag = 12345;
                 [self lowerRightCollectionViewDidScrollForScrollView:scrollView];
                 break;
         }
-    } else {
+    }
+    else {
         [scrollView setContentOffset:scrollView.contentOffset animated:NO];
     }
 }
 
-- (void)lowerLeftCollectionViewDidScrollForScrollView:(UIScrollView *)scrollView {
+- (void)lowerLeftCollectionViewDidScrollForScrollView:(UIScrollView *)scrollView
+{
     [self.lowerRightCollectionView setContentOffset:CGPointMake(self.lowerRightCollectionView.contentOffset.x, scrollView.contentOffset.y) animated:NO];
     [self updateVerticalScrollIndicator];
 
@@ -800,7 +865,8 @@ const static NSUInteger MMScrollIndicatorTag = 12345;
         rect = self.upperRightContainerView.frame;
         rect.origin.y = 0-scrollView.contentOffset.y;
         self.upperRightContainerView.frame = rect;
-    } else {
+    }
+    else {
         CGRect rect = self.upperLeftContainerView.frame;
         rect.origin.y = 0.0f;
         self.upperLeftContainerView.frame = rect;
@@ -811,7 +877,8 @@ const static NSUInteger MMScrollIndicatorTag = 12345;
     }
 }
 
-- (void)upperRightCollectionViewDidScrollForScrollView:(UIScrollView *)scrollView {
+- (void)upperRightCollectionViewDidScrollForScrollView:(UIScrollView *)scrollView
+{
     [self.lowerRightCollectionView setContentOffset:CGPointMake(scrollView.contentOffset.x, self.lowerRightCollectionView.contentOffset.y) animated:NO];
     [self updateHorizontalScrollIndicator];
     
@@ -823,7 +890,8 @@ const static NSUInteger MMScrollIndicatorTag = 12345;
         rect = self.lowerLeftContainerView.frame;
         rect.origin.x = 0-scrollView.contentOffset.x;
         self.lowerLeftContainerView.frame = rect;
-    } else {
+    }
+    else {
         CGRect rect = self.upperLeftContainerView.frame;
         rect.origin.x = 0.0f;
         self.upperLeftContainerView.frame = rect;
@@ -834,7 +902,8 @@ const static NSUInteger MMScrollIndicatorTag = 12345;
     }
 }
 
-- (void)lowerRightCollectionViewDidScrollForScrollView:(UIScrollView *)scrollView {
+- (void)lowerRightCollectionViewDidScrollForScrollView:(UIScrollView *)scrollView
+{
     [self updateVerticalScrollIndicator];
     [self updateHorizontalScrollIndicator];
 
@@ -851,7 +920,8 @@ const static NSUInteger MMScrollIndicatorTag = 12345;
         rect = self.upperRightContainerView.frame;
         rect.origin.y = 0-scrollView.contentOffset.y;
         self.upperRightContainerView.frame = rect;
-    } else {
+    }
+    else {
         CGRect rect = self.upperLeftContainerView.frame;
         rect.origin.y = 0.0f;
         self.upperLeftContainerView.frame = rect;
@@ -869,7 +939,8 @@ const static NSUInteger MMScrollIndicatorTag = 12345;
         rect = self.lowerLeftContainerView.frame;
         rect.origin.x = 0-scrollView.contentOffset.x;
         self.lowerLeftContainerView.frame = rect;
-    } else {
+    }
+    else {
         CGRect rect = self.upperLeftContainerView.frame;
         rect.origin.x = 0.0f;
         
@@ -880,7 +951,8 @@ const static NSUInteger MMScrollIndicatorTag = 12345;
     }
 }
 
-- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
     [self setScrollEnabledValue:NO scrollView:scrollView];
     
     if (self.controllingScrollView != scrollView) {
@@ -895,7 +967,8 @@ const static NSUInteger MMScrollIndicatorTag = 12345;
     [self setScrollEnabledValue:YES scrollView:scrollView];
 }
 
-- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset {
+- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset
+{
     // Block UI if we're in a bounce.
     // Without this, you can lock the scroll views in a scroll which looks weird.
     CGPoint toffset = *targetContentOffset;
@@ -903,7 +976,7 @@ const static NSUInteger MMScrollIndicatorTag = 12345;
         case MMSpreadsheetViewCollectionLowerLeft: {
             BOOL willBouncePastZeroY = velocity.y < 0.0f && !(toffset.y > 0.0f);
             BOOL willBouncePastMaxY = toffset.y > self.lowerLeftCollectionView.contentSize.height - self.lowerLeftCollectionView.frame.size.height - 0.1f && velocity.y > 0.0f;
-            if (willBouncePastZeroY || willBouncePastMaxY) {
+            if (willBouncePastZeroY || willBouncePastMaxY || !self.bounces) {
                 self.upperRightContainerView.userInteractionEnabled = NO;
                 self.lowerRightContainerView.userInteractionEnabled = NO;
                 self.lowerLeftBouncing = YES;
@@ -914,7 +987,7 @@ const static NSUInteger MMScrollIndicatorTag = 12345;
         case MMSpreadsheetViewCollectionUpperRight: {
             BOOL willBouncePastZeroX = velocity.x < 0.0f && !(toffset.x > 0.0f);
             BOOL willBouncePastMaxX = toffset.x > self.upperRightCollectionView.contentSize.width - self.upperRightCollectionView.frame.size.width - 0.1f && velocity.x > 0.0f;
-            if (willBouncePastZeroX || willBouncePastMaxX) {
+            if (willBouncePastZeroX || willBouncePastMaxX || !self.bounces) {
                 self.lowerRightContainerView.userInteractionEnabled = NO;
                 self.lowerLeftContainerView.userInteractionEnabled = NO;
                 self.upperRightBouncing = YES;
@@ -928,7 +1001,7 @@ const static NSUInteger MMScrollIndicatorTag = 12345;
             BOOL willBouncePastZeroY = velocity.y < 0.0f && !(toffset.y > 0.0f);
             BOOL willBouncePastMaxY = toffset.y > self.lowerLeftCollectionView.contentSize.height - self.lowerLeftCollectionView.frame.size.height - 0.1f && velocity.y > 0.0f;
             if (willBouncePastZeroX || willBouncePastMaxX ||
-                willBouncePastZeroY || willBouncePastMaxY) {
+                willBouncePastZeroY || willBouncePastMaxY || !self.bounces) {
                 self.upperRightContainerView.userInteractionEnabled = NO;
                 self.lowerLeftContainerView.userInteractionEnabled = NO;
                 self.lowerRightBouncing = YES;
@@ -938,11 +1011,13 @@ const static NSUInteger MMScrollIndicatorTag = 12345;
     }
 }
 
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
     [self scrollViewDidStop:scrollView];
 }
 
-- (void)scrollViewDidStop:(UIScrollView *)scrollView {
+- (void)scrollViewDidStop:(UIScrollView *)scrollView
+{
     self.upperRightContainerView.userInteractionEnabled = YES;
     self.lowerRightContainerView.userInteractionEnabled = YES;
     self.lowerLeftContainerView.userInteractionEnabled = YES;

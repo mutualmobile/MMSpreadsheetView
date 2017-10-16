@@ -31,7 +31,8 @@
 
 @implementation MMGridLayout
 
-- (id)init {
+- (instancetype)init
+{
     self = [super init];
     if (self) {
         _cellSpacing = 1.0f;
@@ -40,17 +41,20 @@
     return self;
 }
 
-- (void)setItemSize:(CGSize)itemSize {
+- (void)setItemSize:(CGSize)itemSize
+{
     _itemSize = CGSizeMake(itemSize.width + self.cellSpacing, itemSize.height + self.cellSpacing);
     [self invalidateLayout];
 }
 
-- (void)setCellSpacing:(CGFloat)cellSpacing {
+- (void)setCellSpacing:(CGFloat)cellSpacing
+{
     _cellSpacing = cellSpacing;
     [self invalidateLayout];
 }
 
-- (void)prepareLayout {
+- (void)prepareLayout
+{
     [super prepareLayout];
     self.gridRowCount = [self.collectionView numberOfSections];
     self.gridColumnCount = [self.collectionView numberOfItemsInSection:0];
@@ -65,7 +69,8 @@
     }
 }
 
-- (CGSize)collectionViewContentSize {
+- (CGSize)collectionViewContentSize
+{
     if (!self.isInitialized) {
         [self prepareLayout];
     }
@@ -73,7 +78,8 @@
     return size;
 }
 
-- (NSArray *)layoutAttributesForElementsInRect:(CGRect)rect {
+- (NSArray *)layoutAttributesForElementsInRect:(CGRect)rect
+{
     NSMutableArray *attributes = [NSMutableArray array];
     NSUInteger startRow = floorf(rect.origin.y / self.itemSize.height);
     NSUInteger startCol = floorf(rect.origin.x / self.itemSize.width);
@@ -92,13 +98,15 @@
     return attributes;
 }
 
-- (UICollectionViewLayoutAttributes *)layoutAttributesForItemAtIndexPath:(NSIndexPath *)indexPath {
+- (UICollectionViewLayoutAttributes *)layoutAttributesForItemAtIndexPath:(NSIndexPath *)indexPath
+{
     UICollectionViewLayoutAttributes *attributes = [UICollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:indexPath];
     attributes.frame = CGRectMake(indexPath.item * self.itemSize.width, indexPath.section * self.itemSize.height, self.itemSize.width-self.cellSpacing, self.itemSize.height-self.cellSpacing);
     return attributes;
 }
 
-- (BOOL)shouldInvalidateLayoutForBoundsChange:(CGRect)newBounds {
+- (BOOL)shouldInvalidateLayoutForBoundsChange:(CGRect)newBounds
+{
     return NO;
 }
 

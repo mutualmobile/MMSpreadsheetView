@@ -22,7 +22,8 @@
 
 @implementation MMGridCell
 
-- (id)initWithFrame:(CGRect)frame {
+- (id)initWithFrame:(CGRect)frame
+{
     self = [super initWithFrame:frame];
     if (self) {
         CGRect rect = CGRectMake(0.0f, 0.0f, frame.size.width, frame.size.height);
@@ -35,7 +36,8 @@
     return self;
 }
 
-- (void)setSelected:(BOOL)selected {
+- (void)setSelected:(BOOL)selected
+{
     [super setSelected:selected];
     if (selected) {
         [self.contentView setBackgroundColor:[UIColor lightGrayColor]];
